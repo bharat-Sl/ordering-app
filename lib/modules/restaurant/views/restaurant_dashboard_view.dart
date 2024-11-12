@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ordering/core/utils/assets.dart';
+import 'package:ordering/modules/restaurant/widgets/menu_tile.dart';
 
 class RestaurantDashboardView extends HookWidget {
   const RestaurantDashboardView({super.key});
@@ -11,7 +12,7 @@ class RestaurantDashboardView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     const collapsedBarHeight = 60.0;
-    const expandedBarHeight = 400.0;
+    const expandedBarHeight = 340.0;
 
     final scrollController = useScrollController();
     final isCollapsed = useState(false);
@@ -76,10 +77,9 @@ class RestaurantDashboardView extends HookWidget {
               SliverToBoxAdapter(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height,
-                      maxHeight: MediaQuery.of(context).size.height),
-                  child: Material(
-                    elevation: 0,
+                      minHeight: MediaQuery.of(context).size.height - 70,
+                      maxHeight: MediaQuery.of(context).size.height - 70),
+                  child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(
                         15,
@@ -88,16 +88,71 @@ class RestaurantDashboardView extends HookWidget {
                         15,
                       ),
                     ),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(
-                          15,
-                        ),
-                        topRight: Radius.circular(
-                          15,
+                    child: Scaffold(
+                      backgroundColor: Colors.white,
+                      body: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 40,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffdddddd),
+                                    borderRadius: BorderRadius.circular(100)),
+                              ),
+                            ),
+                            SizedBox(height: 24),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: 12),
+                                  ...[
+                                    "Filters",
+                                    "Veg",
+                                    "Non-veg",
+                                    "Bestseller",
+                                    "Spicy"
+                                  ].map(
+                                    (e) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 5),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 3),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.1),
+                                                blurRadius: 1)
+                                          ],
+                                          border: Border.all(
+                                              color: Color(0xffdddddd)),
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Text(
+                                        e,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 24),
+                            MenuTile(),
+                            MenuTile(),
+                            MenuTile(),
+                          ],
                         ),
                       ),
-                      child: Scaffold(),
                     ),
                   ),
                 ),
@@ -118,66 +173,155 @@ class ExpandedAppBarContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+      child: Column(
         children: [
-          Column(
+          Expanded(child: SizedBox()),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                "Castle's Barbeque",
-                style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Castle's Barbeque",
+                      style: TextStyle(
+                          fontSize: 23,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      "3rd Floor, Mall Fifty One, Sector 51, Gurgaon",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white.withOpacity(0.8),
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(height: 12),
+                    Wrap(
+                      runSpacing: 2,
+                      children: [
+                        Text(
+                          "₹1700 for two • ",
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        ...["Chinese", "North Indian", "South Indian"]
+                            .asMap()
+                            .map<int, Widget>(
+                              (k, e) {
+                                return MapEntry<int, Widget>(
+                                  k,
+                                  Text(
+                                    "${e}${k < 2 ? " • " : ""}",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white.withOpacity(0.8),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                            .values
+                            .toList(),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.watch_later,
+                            color: Colors.amber,
+                            size: 16,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            "Opens in 15 mins",
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                  ],
+                ),
               ),
-              SizedBox(height: 4),
-              Text(
-                "3rd Floor, Mall Fifty One, Sector 51, Gurgaon",
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 12),
-              Row(
-                children: [
-                  Icon(
-                    Icons.watch_later,
-                    color: Colors.pink[200],
-                    size: 16,
-                  ),
-                  SizedBox(width: 6),
-                  Text(
-                    "Opens in 15 mins",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ],
+              Expanded(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(height: 6),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Color(0xffdd2f6e),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(width: 2),
+                              Text("9.4",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800)),
+                              SizedBox(width: 2),
+                              Icon(
+                                Icons.star_rounded,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 4),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              "182\nReviews",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black.withOpacity(0.8)),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                  ],
+                ),
               ),
             ],
-          ),
-          SizedBox(width: 12),
-          Container(
-            child: Row(
-              children: [
-                Icon(
-                  Icons.star_rounded,
-                  color: Colors.yellow,
-                  size: 16,
-                ),
-                SizedBox(width: 4),
-                Text("4.2", style: TextStyle(color: Colors.white)),
-                Text(
-                  "(189)",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              ],
-            ),
           ),
         ],
       ),
