@@ -17,7 +17,7 @@ class _MenuTileState extends State<MenuTile> {
       children: [
         Theme(
           data: ThemeData().copyWith(
-            dividerColor: Color(0xffeeeeee),
+            dividerColor: const Color(0xffeeeeee),
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             splashFactory: NoSplash.splashFactory,
@@ -26,7 +26,7 @@ class _MenuTileState extends State<MenuTile> {
               initiallyExpanded: expanded,
               backgroundColor: Colors.white,
               collapsedBackgroundColor: Colors.white,
-              title: Text(
+              title: const Text(
                 "Veg Pizza",
                 style: TextStyle(
                     fontSize: 16,
@@ -34,27 +34,28 @@ class _MenuTileState extends State<MenuTile> {
                     letterSpacing: 0),
               ),
               shape: const Border(),
-              children: [
-                ...List.generate(
-                  3,
-                  (index) => ItemTile(),
-                ),
-              ],
               onExpansionChanged: ((newState) {
-                if (newState)
+                if (newState) {
                   setState(() {
                     expanded = true;
                   });
-                else
+                } else {
                   setState(() {
                     expanded = false;
                   });
-              })),
+                }
+              }),
+              children: [
+                ...List.generate(
+                  3,
+                  (index) => const ItemTile(),
+                ),
+              ]),
         ),
         Container(
           width: double.maxFinite,
           height: 6,
-          color: Color(0xffeeeeee),
+          color: const Color(0xffeeeeee),
         ),
       ],
     );

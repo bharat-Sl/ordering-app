@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ordering/core/utils/assets.dart';
+import 'package:ordering/modules/restaurant/views/restaurant_dashboard_view.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPEntryView extends StatefulWidget {
@@ -58,7 +59,7 @@ class _OTPEntryViewState extends State<OTPEntryView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 Container(
                   width: double.maxFinite,
                   padding:
@@ -185,7 +186,7 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                         children: [
                           RichText(
                             text: TextSpan(
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xffdd2f6e),
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
@@ -200,9 +201,9 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                                       },
                                   ),
                                 if (_start > 0)
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Resend code in ',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Color(0xff777777),
                                       fontSize: 12,
                                     ),
@@ -213,7 +214,7 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                                     style: const TextStyle(
                                         color: Color(0xffdd2f6e), fontSize: 12),
                                   ),
-                                TextSpan(
+                                const TextSpan(
                                   text: ' or ',
                                   style: TextStyle(
                                     color: Color(0xff777777),
@@ -223,7 +224,7 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                                 ),
                                 TextSpan(
                                   text: 'Change Number',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xffdd2f6e),
@@ -260,31 +261,40 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Container(
-                        height: 50,
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xffdd2f6e),
-                                  Color(0xffed3f7e),
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.centerRight),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: const Center(
-                          child: Text(
-                            "SEND OTP",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      RestaurantDashboardView()),
+                              (route) => false);
+                        },
+                        child: Container(
+                          height: 50,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xffdd2f6e),
+                                    Color(0xffed3f7e),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.centerRight),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: const Center(
+                            child: Text(
+                              "VERIFY OTP",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -294,10 +304,10 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                         Image.asset(
                           Assets.logoBG,
                           height: 40,
-                          color: Color(0xffdd2f6e),
+                          color: const Color(0xffdd2f6e),
                         ),
-                        SizedBox(width: 5),
-                        Text(
+                        const SizedBox(width: 5),
+                        const Text(
                           "BIT\nBYTES",
                           style: TextStyle(
                             fontSize: 16,
@@ -312,7 +322,7 @@ class _OTPEntryViewState extends State<OTPEntryView> {
                 ),
               ],
             ),
-            Positioned(
+            const Positioned(
                 top: 16,
                 right: 0,
                 child: Icon(

@@ -8,21 +8,33 @@ class ItemTile extends StatefulWidget {
 }
 
 class _ItemTileState extends State<ItemTile> {
+  int count = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
               Container(
-                width: 100,
-                height: 100,
+                width: 80,
+                height: 80,
                 decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Color(0xffdddddd)),
+                    image: const DecorationImage(
+                        image: NetworkImage(
+                            "https://shwetainthekitchen.com/wp-content/uploads/2023/08/Tandoori-Paneer-Naan-Pizza.jpg"),
+                        fit: BoxFit.cover),),
               ),
               Positioned(
                 top: 5,
@@ -46,14 +58,129 @@ class _ItemTileState extends State<ItemTile> {
               )
             ],
           ),
-          SizedBox(width: 8),
-          Column(
-            children: [
-              Text(
-                "Tandoori Paneer",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,),
-              ),
-            ],
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Tandoori Paneer",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "It's our signature Spiced Paneer, Crunchy Onions & Green Capsicum, spicy Red Paprika with delicious Tandoori Sauce and 100% mozzarella cheese.",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black.withOpacity(0.8),
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        "Rs. 200",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    if (count == 0)
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            count += 1;
+                          });
+                        },
+                        child: Container(
+                          width: 90,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    blurRadius: 1)
+                              ],
+                              border:
+                                  Border.all(color: const Color(0xffdddddd)),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Center(
+                            child: Text(
+                              "ADD",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black.withOpacity(0.8),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    else
+                      Container(
+                        width: 90,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  blurRadius: 1)
+                            ],
+                            border: Border.all(color: const Color(0xffdddddd)),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  count -= 1;
+                                });
+                              },
+                              child: Icon(
+                                count < 2 ? Icons.remove : Icons.remove,
+                                size: 18,
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  count.toString(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black.withOpacity(0.8),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  count += 1;
+                                });
+                              },
+                              child: Icon(
+                                Icons.add,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),

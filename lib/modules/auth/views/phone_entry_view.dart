@@ -43,7 +43,7 @@ class _PhoneEntryViewState extends State<PhoneEntryView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             Container(
               width: double.maxFinite,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -167,7 +167,7 @@ class _PhoneEntryViewState extends State<PhoneEntryView> {
                 ],
               ),
             ),
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -177,10 +177,10 @@ class _PhoneEntryViewState extends State<PhoneEntryView> {
                     Image.asset(
                       Assets.logoBG,
                       height: 40,
-                      color: Color(0xffdd2f6e),
+                      color: const Color(0xffdd2f6e),
                     ),
-                    SizedBox(width: 5),
-                    Text(
+                    const SizedBox(width: 5),
+                    const Text(
                       "BIT\nBYTES",
                       style: TextStyle(
                         fontSize: 16,
