@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:ordering/modules/restaurant/widgets/item_detail_bottom_sheet.dart';
 
 class ItemTile extends StatefulWidget {
   const ItemTile({super.key});
@@ -9,10 +12,12 @@ class ItemTile extends StatefulWidget {
 
 class _ItemTileState extends State<ItemTile> {
   int count = 0;
+  bool customize = false;
 
   @override
   void initState() {
     super.initState();
+    customize = Random().nextBool();
   }
 
   @override
@@ -95,9 +100,13 @@ class _ItemTileState extends State<ItemTile> {
                     if (count == 0)
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            count += 1;
-                          });
+                          if (customize) {
+                            ItemDetailBottomSheet.show(context);
+                          } else {
+                            setState(() {
+                              count += 1;
+                            });
+                          }
                         },
                         child: Container(
                           width: 90,
@@ -180,9 +189,25 @@ class _ItemTileState extends State<ItemTile> {
                       ),
                   ],
                 ),
+                if (customize)
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      width: 90,
+                      child: Center(
+                        child: Text(
+                          "customize",
+                          style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
